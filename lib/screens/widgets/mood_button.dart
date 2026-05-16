@@ -3,11 +3,10 @@ import 'package:flutter/services.dart';
 import '../../contoller/app_controller.dart';
 import '../../data/modal/app_modal.dart';
 
-
 class LogMoodButton extends StatefulWidget {
   final MoodState state;
 
-  const LogMoodButton({super.key, required this.state});
+  LogMoodButton({super.key, required this.state});
 
   @override
   State<LogMoodButton> createState() => _LogMoodButtonState();
@@ -54,17 +53,16 @@ class _LogMoodButtonState extends State<LogMoodButton>
   @override
   Widget build(BuildContext context) {
     final hasSelection = widget.state.selectedMood != null;
-    final moodData =
-    hasSelection ? getMoodData(widget.state.selectedMood!) : null;
+    final moodData = hasSelection
+        ? getMoodData(widget.state.selectedMood!)
+        : null;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: AnimatedBuilder(
         animation: _scale,
-        builder: (context, child) => Transform.scale(
-          scale: _scale.value,
-          child: child,
-        ),
+        builder: (context, child) =>
+            Transform.scale(scale: _scale.value, child: child),
         child: GestureDetector(
           onTap: _handleLog,
           child: AnimatedContainer(
@@ -74,26 +72,23 @@ class _LogMoodButtonState extends State<LogMoodButton>
             decoration: BoxDecoration(
               gradient: hasSelection
                   ? LinearGradient(
-                colors: [
-                  moodData!.primaryColor,
-                  moodData.accentColor,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )
+                      colors: [moodData!.primaryColor, moodData.accentColor],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    )
                   : null,
               color: hasSelection ? null : const Color(0xFF252438),
               borderRadius: BorderRadius.circular(18),
-              boxShadow: hasSelection
-                  ? [
+              boxShadow: [
                 BoxShadow(
-                  color: moodData!.primaryColor.withOpacity(0.35),
-                  blurRadius: 18,
+                  color: hasSelection
+                      ? moodData!.primaryColor.withOpacity(0.35)
+                      : Colors.transparent,
+                  blurRadius: hasSelection ? 18 : 0.1,
                   spreadRadius: 0,
-                  offset: const Offset(0, 6),
+                  offset: hasSelection ? const Offset(0, 6) : Offset.zero,
                 ),
-              ]
-                  : [],
+              ],
             ),
             child: Center(
               child: AnimatedDefaultTextStyle(
@@ -103,12 +98,11 @@ class _LogMoodButtonState extends State<LogMoodButton>
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 2.0,
-                  color:
-                  hasSelection ? const Color(0xFF0F0E17) : const Color(0xFF4A4766),
+                  color: hasSelection
+                      ? const Color(0xFF0F0E17)
+                      : const Color(0xFF4A4766),
                 ),
-                child: Text(
-                  hasSelection ? 'LOG THIS MOOD' : 'SELECT A MOOD',
-                ),
+                child: Text(hasSelection ? 'LOG THIS MOOD' : 'SELECT A MOOD'),
               ),
             ),
           ),

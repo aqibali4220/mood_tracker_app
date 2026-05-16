@@ -47,12 +47,16 @@ class AppHeader extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             _getGreeting(),
-            style: Theme.of(context).textTheme.displayMedium,
+            style: Theme.of(
+              context,
+            ).textTheme.displayMedium!.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 4),
           Text(
             _getFormattedDate(),
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium!.copyWith(color: Colors.white),
           ),
         ],
       ),

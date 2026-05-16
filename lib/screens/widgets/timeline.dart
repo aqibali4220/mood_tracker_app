@@ -5,11 +5,10 @@ import '../../contoller/app_controller.dart';
 import '../../data/modal/app_modal.dart';
 import 'face_widget.dart';
 
-
 class MoodTimeline extends StatelessWidget {
   final MoodState state;
 
-  const MoodTimeline({super.key, required this.state});
+  MoodTimeline({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +34,7 @@ class MoodTimeline extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Container(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
                   color: const Color(0xFF252438),
                   borderRadius: BorderRadius.circular(10),
@@ -60,10 +58,7 @@ class MoodTimeline extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             itemCount: entries.length,
             itemBuilder: (context, index) {
-              return _TimelineCard(
-                entry: entries[index],
-                isLatest: index == 0,
-              );
+              return _TimelineCard(entry: entries[index], isLatest: index == 0);
             },
           ),
         ),
@@ -97,7 +92,9 @@ class _TimelineCard extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(right: 12),
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeOut,
         width: 110,
         decoration: BoxDecoration(
           color: const Color(0xFF1A1928),
@@ -108,40 +105,21 @@ class _TimelineCard extends StatelessWidget {
                 : moodData.primaryColor.withOpacity(0.15),
             width: isLatest ? 1.5 : 1,
           ),
-          boxShadow: isLatest
-              ? [
+          boxShadow: [
             BoxShadow(
-              color: moodData.primaryColor.withOpacity(0.12),
-              blurRadius: 16,
-              spreadRadius: 2,
+              color: isLatest
+                  ? moodData.primaryColor.withOpacity(0.12)
+                  : Colors.transparent,
+              blurRadius: isLatest ? 16 : 0.1,
+              spreadRadius: isLatest ? 2 : 0,
             ),
-          ]
-              : null,
+          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Colored accent line at top
-            Container(
-              height: 3,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    moodData.primaryColor.withOpacity(0),
-                    moodData.primaryColor,
-                    moodData.primaryColor.withOpacity(0),
-                  ],
-                ),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-            ),
-            const SizedBox(height: 10),
             // Tappable face
-            TappableMoodFace(
-              moodType: entry.type,
-              size: 58,
-            ),
+            TappableMoodFace(moodType: entry.type, size: 58),
             const SizedBox(height: 8),
             // Date label
             Text(
@@ -193,9 +171,7 @@ class _EmptyTimeline extends StatelessWidget {
             decoration: BoxDecoration(
               color: const Color(0xFF1A1928),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: const Color(0xFF2E2C45),
-              ),
+              border: Border.all(color: const Color(0xFF2E2C45)),
             ),
             child: const Center(
               child: Text(

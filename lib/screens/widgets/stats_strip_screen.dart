@@ -7,7 +7,7 @@ import '../../data/modal/app_modal.dart';
 class StatsStrip extends StatelessWidget {
   final MoodState state;
 
-  const StatsStrip({required this.state});
+  StatsStrip({required this.state});
 
   @override
   Widget build(BuildContext context) {
